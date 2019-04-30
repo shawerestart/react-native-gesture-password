@@ -7,18 +7,18 @@ export default class Circle extends Component {
     }
 
     render() {
-        let {color, normalColor, fill, x, y, r, inner, outer} = this.props;
+        let {color, normalColor, fill, x, y, r, inner, outer, outerStyle, innerStyle} = this.props;
 
         return (
             <View style={[styles.outer,
                         {left: x - r, top: y - r, width: 2 * r, height: 2 * r, borderRadius: r}, {borderColor: normalColor},
                         fill && {borderColor: color},
-                        !outer && {borderWidth: 0}]}>
+                        !outer && {borderWidth: 0}, { ...outerStyle}]}>
 
                 {inner && <View style={[
                             !outer && styles.inner,
                             {width: 2 * r / 3, height: 2 * r / 3, borderRadius: r / 3},
-                            fill && {backgroundColor: color}
+                            fill && {backgroundColor: color}, { ...innerStyle}
                         ]} />}
             </View>
         )
@@ -32,7 +32,9 @@ Circle.propTypes = {
     y: PropTypes.number,
     r: PropTypes.number,
     inner: PropTypes.bool,
-    outer: PropTypes.bool
+    outer: PropTypes.bool,
+    outerStyle: PropTypes.object,
+    innerStyle: PropTypes.object
 }
 
 Circle.defaultProps = {
@@ -49,7 +51,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     inner: {
-        backgroundColor: '#8E91A8'
+        backgroundColor: '#8E91A8',
+        overflow: 'hidden'
     }
 })
 
